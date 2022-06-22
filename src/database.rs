@@ -82,7 +82,7 @@ impl Database {
                 pk blob not null,
                 created_at datetime not null default(current_timestamp),
                 user blob,
-                status tinyint,
+                status tinyint default 0,
                 note varchar(300),
                 info text not null
             ) without rowid;
@@ -100,7 +100,7 @@ impl Database {
     pub async fn get_peer(&self, id: &str) -> ResultType<Option<Peer>> {
         Ok(sqlx::query_as!(
             Peer,
-            "select guid, id, uuid, pk, user, status, info from peer where id = ?",
+            "select guid, id, uuid, pk, user, status, info from peer where id = ? and status = 1",
             id
         )
         .fetch_optional(self.pool.get().await?.deref_mut())

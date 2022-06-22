@@ -296,6 +296,7 @@ impl RendezvousServer {
                     }
                 }
                 Some(rendezvous_message::Union::register_pk(rk)) => {
+                    log::info!("Some(rendezvous_message::Union::register_pk(rk))");
                     if rk.uuid.is_empty() || rk.pk.is_empty() {
                         return Ok(());
                     }
@@ -373,6 +374,7 @@ impl RendezvousServer {
                         }
                     }
                     if changed {
+                        log::info!("update_pk {:?} {:?} {:?} {:?} {:?} {:?}", id, peer, addr, rk.uuid, rk.pk, ip);
                         self.pm.update_pk(id, peer, addr, rk.uuid, rk.pk, ip).await;
                     }
                     let mut msg_out = RendezvousMessage::new();
