@@ -117,6 +117,7 @@ impl PeerMap {
                     return register_pk_response::Result::SERVER_ERROR;
                 }
                 Ok(guid) => {
+                    log::info!("insert_peer {} {:?} {:?} {:?}", id, addr, uuid, pk);
                     peer.write().await.guid = guid;
                 }
             }
